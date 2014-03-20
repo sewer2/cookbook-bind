@@ -1,3 +1,4 @@
+
 search(:zones).each do |zone|
   next unless zone['zone_info']
   unless zone['autodomain'].nil? || zone['autodomain'] == ''
@@ -17,7 +18,7 @@ search(:zones).each do |zone|
     owner "root"
     group "root"
     mode 0644
-    notifies :restart, resources(:service => "bind")
+    notifies :restart, resources(:service => "bind9")
     variables({
       :serial => Time.new.strftime("%Y%m%d%H%M%S")
     })
@@ -38,6 +39,6 @@ search(:zones).each do |zone|
       :mail_exchange => zone['zone_info']['mail_exchange'],
       :records => zone['zone_info']['records']
     })
-    notifies :create, resources(:template => "#{node[:bind][:vardir]}/#{zone['domain']}"), :immediately
+    notifies :create, resources(:template => "#{node[:bind][:vardir]}/#{node[:bind][:zonetype]}/db.#{zone['domain']}"), :immediately
   end
 end
