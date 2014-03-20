@@ -1,4 +1,5 @@
 search(:zones).each do |zone|
+  next unless zone['zone_info']
   unless zone['autodomain'].nil? || zone['autodomain'] == ''
     search(:node, "domain:#{zone['autodomain']}").each do |host|
       next if host['ipaddress'] == '' || host['ipaddress'].nil?
