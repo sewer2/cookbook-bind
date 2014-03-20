@@ -12,12 +12,13 @@ $TTL <%= @global_ttl %>
                            IN    NS <%= ns %>
 <% end %>
 
+<% if @mail_exchange != nil %>
 <% @mail_exchange.each do |mx| -%>
                            IN    MX <%= mx['priority'] %> <%= mx['host'] %>
 <% end %>
+<% end %>
 
                            IN     A <%= node['ipaddress'] %>
-ns                         IN     A <%= node['ipaddress'] %>
 
 <% @records.each do |record| -%>
 <%= "%-20s %5s IN %5s %s" % [record['name'],record['ttl'],record['type'],record['ip']] %>
