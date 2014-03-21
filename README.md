@@ -329,6 +329,8 @@ use the following format to include a number of zones at once.
 
 `serial` is generated automagicaly.
 
+  * data_bag: zones
+
 ```json
 { "id" : "example.com",
   "domain" : "example.com",
