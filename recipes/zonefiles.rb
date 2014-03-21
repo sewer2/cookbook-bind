@@ -12,7 +12,7 @@ search(:zones).each do |zone|
     end
   end
 
-  template "#{node[:bind][:vardir]}/#{node[:bind][:zonetype]}/db.#{zone['domain']}" do
+  template "#{node[:bind][:vardir]}/#{node[:bind][:zonetype]}/#{zone['domain']}" do
     source "#{node[:bind][:vardir]}/templates/#{zone['domain']}.erb"
     local true
     owner "root"
@@ -39,6 +39,6 @@ search(:zones).each do |zone|
       :mail_exchange => zone['zone_info']['mail_exchange'],
       :records => zone['zone_info']['records']
     })
-    notifies :create, resources(:template => "#{node[:bind][:vardir]}/#{node[:bind][:zonetype]}/db.#{zone['domain']}"), :immediately
+    notifies :create, resources(:template => "#{node[:bind][:vardir]}/#{node[:bind][:zonetype]}/#{zone['domain']}"), :immediately
   end
 end
