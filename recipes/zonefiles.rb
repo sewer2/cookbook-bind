@@ -4,7 +4,7 @@ else
   search(:zones).each do |zone|
     next unless zone['zone_info']
 
-    template "#{node[:bind][:vardir]}/#{zone[:type]}/#{zone['domain']}" do
+    template "#{node[:bind][:vardir]}/#{zone['type']}/#{zone['domain']}" do
       source "#{node[:bind][:vardir]}/templates/#{zone['domain']}.erb"
       local true
       owner "root"
@@ -31,7 +31,7 @@ else
         :mail_exchange => zone['zone_info']['mail_exchange'],
         :records => zone['zone_info']['records']
       })
-      notifies :create, resources(:template => "#{node[:bind][:vardir]}/#{zone[:type]}/#{zone['domain']}"), :immediately
+      notifies :create, resources(:template => "#{node[:bind][:vardir]}/#{zone['type']}/#{zone['domain']}"), :immediately
     end
   end
 end
