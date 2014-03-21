@@ -189,6 +189,15 @@ Alternatively, you can just use an `override['bind']['zones']` in
 a role or environment instead.  Or even a mix of both override
 attributes, and an API query to populate zones.
 
+### Notes on the zonefiles recipe
+
+The zonefiles is optional recipe to generate complete zone from data bag. 
+It is only generate all zones in specific data bag (currently 'zones'), 
+but not include them to bind config.
+
+To load zones into config set them as array as follows:
+`bind["zones"]["attribute"] = ['example.com', 'example.org']`
+
 ### Example role for internal recursing DNS
 
 An example wrapper cookbook for an internal split-horizon BIND server for
@@ -313,6 +322,51 @@ use the following format to include a number of zones at once.
 {
   "id": "example",
   "zones": [ "example.com", "example.org" ]
+}
+```
+
+### Example to generate zones from data bag
+
+`serial` is generated automagicaly.
+
+```json
+{ "id" : "example.com",
+  "domain" : "example.com",
+  "type": "master",
+  "allow_transfer": [ "192.168.0.2", "192.168.0.3" ],
+  "zone_info": {
+    "global_ttl": 300,
+    "soa": "ns.example.com.",
+    "contact": "admin.example.com",
+    "nameserver": [ "ns1.example.com." ],
+    "mail_exchange": [{ 
+      "priority": 10,
+      "host": "ASPMX.L.GOOGLE.COM." 
+    },{
+      "priority": 20,
+      "host": "ALT1.ASPMX.L.GOOGLE.COM."
+    },{
+      "priority": 20,
+      "host": "ALT2.ASPMX.L.GOOGLE.COM."
+    },{
+      "priority": 30,
+      "host": "ASPMX2.GOOGLEMAIL.COM."
+    },{
+      "priority": 30,
+      "host": "ASPMX3.GOOGLEMAIL.COM."
+    },{
+      "priority": 30,
+      "host": "ASPMX4.GOOGLEMAIL.COM."
+    },{
+      "priority": 30,
+      "host": "ASPMX5.GOOGLEMAIL.COM."
+    }],   
+   "records": [
+     {"name": "www",        "type": "A",     "ip": "192.168.0.4"},
+     {"name": "ns1",        "type": "A",     "ip": "192.168.0.5"},
+     {"name": "ns2",        "type": "A",     "ip": "192.168.0.6"}
+   ]
+  }
 }
 ```
 

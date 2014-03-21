@@ -18,8 +18,6 @@ $TTL <%= @global_ttl %>
 <% end %>
 <% end %>
 
-                           IN     A <%= node['ipaddress'] %>
-
 <% @records.each do |record| -%>
 <%= "%-20s %5s IN %5s %s" % [record['name'],record['ttl'],record['type'],record['ip']] %>
 <% end %>

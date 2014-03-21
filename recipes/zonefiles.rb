@@ -3,16 +3,6 @@ if Chef::Config['solo'] && !node['bind']['allow_solo_search']
 else
   search(:zones).each do |zone|
     next unless zone['zone_info']
-    unless zone['autodomain'].nil? || zone['autodomain'] == ''
-      search(:node, "domain:#{zone['autodomain']}").each do |host|
-        next if host['ipaddress'] == '' || host['ipaddress'].nil?
-        zone['zone_info']['records'].push( {
-          "name" => host['hostname'],
-          "type" => "A",
-          "ip" => host['ipaddress']
-        })
-      end
-    end
 
     template "#{node[:bind][:vardir]}/#{node[:bind][:zonetype]}/#{zone['domain']}" do
       source "#{node[:bind][:vardir]}/templates/#{zone['domain']}.erb"
