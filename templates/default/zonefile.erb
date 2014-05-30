@@ -19,6 +19,6 @@ $TTL <%= @global_ttl %>
 <% end %>
 
 <% @records.each do |record| -%>
-<%= "%-20s %5s IN %5s %s" % [record['name'],record['ttl'],record['type'],record['ip']] %>
+<%= "%-20s %5s IN %5s %s" % [record['name'],record['ttl'],record['type'],record['value']] %>
 <% end %>
 

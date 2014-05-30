@@ -364,9 +364,9 @@ use the following format to include a number of zones at once.
       "host": "ASPMX5.GOOGLEMAIL.COM."
     }],   
    "records": [
-     {"name": "www",        "type": "A",     "ip": "192.168.0.4"},
-     {"name": "ns1",        "type": "A",     "ip": "192.168.0.5"},
-     {"name": "ns2",        "type": "A",     "ip": "192.168.0.6"}
+     {"name": "www",        "type": "A",     "value": "192.168.0.4"},
+     {"name": "ns1",        "type": "A",     "value": "192.168.0.5"},
+     {"name": "ns2",        "type": "A",     "value": "192.168.0.6"}
    ]
   }
 }
