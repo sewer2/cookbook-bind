@@ -22,11 +22,13 @@ options {
   <% else -%>
   recursion no;
   <% end -%>
+  <% if node['bind']['allow-query'] != nil -%>
   allow-query {
     <% node['bind']['allow-query'].each do |acl| -%>
     <%= acl%>;
     <% end -%>
   };
+  <% end -%>
   <% if node['bind']['allow-query-cache'] != nil -%>
   allow-query-cache {
     <% node['bind']['allow-query-cache'].each do |acl| -%>
