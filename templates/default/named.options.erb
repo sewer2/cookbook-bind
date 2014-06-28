@@ -10,7 +10,9 @@ acl "<%= acl['id'] -%>" {
 
 <% end -%>
 
+<% if node['bind']['masters'] != [] -%>
 masters default { <% node['bind']['masters'].each do |host| -%><%= host -%>; <% end -%> };
+<% end -%>
 
 options {
   directory "<%= node['bind']['vardir'] %>";

@@ -71,7 +71,8 @@ default['bind']['acls'] = []
 
 # These attributes are for setting allow-* options. Each is a list of ACLs defined in data_bag.
 # If allow-query is not redefined, only requests from localhost and local networks will be served.
-default['bind']['allow-query'] = [ :localhost, :localnets ]
+#default['bind']['allow-query'] = [ :localhost, :localnets ]
+default['bind']['allow-query'] = nil
 default['bind']['allow-query-cache'] = nil
 default['bind']['allow-recursion'] = nil
 
