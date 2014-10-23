@@ -115,6 +115,13 @@ template node['bind']['conf_file'] do
   )
 end
 
+node['bind']['included_files'].each do |file|
+  file "#{node['bind']['sysconfdir']}/#{file}" do
+    mode "0644"
+    action :create_if_missing
+  end
+end
+
 service node['bind']['service_name'] do
   supports reload: true, status: true
   action [:enable, :start]
