@@ -74,6 +74,8 @@ default['bind']['acls'] = []
 default['bind']['allow-query'] = [ :localhost, :localnets ]
 default['bind']['allow-query-cache'] = nil
 default['bind']['allow-recursion'] = nil
+default['bind']['allow-transfer'] = nil
+default['bind']['allow-notify'] = nil
 
 # Enable/disable recursion in options block. Enabled by default.
 default['bind']['recursion'] = true
