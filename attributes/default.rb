@@ -55,6 +55,8 @@ default['bind']['masters'] = []
 
 # Boolean to turn off/on IPV6 support
 default['bind']['ipv6_listen'] = false
+default['bind']['listen-on'] = []
+default['bind']['listen-on-v6'] = []
 
 # If this is a virtual machine, you need to use urandom as
 # any VM does not have a real CMOS clock for entropy.

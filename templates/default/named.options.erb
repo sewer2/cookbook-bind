@@ -55,7 +55,24 @@ options {
     <% end -%>
   };
   <% end -%>
-  <% if node['bind']['ipv6_listen'] -%>listen-on-v6 { any; };<% end -%>
+  <% if !node['bind']['listen-on'].empty? %>
+  listen-on {
+  <% node['bind']['listen-on'].each do |addr| %>
+      <%= addr %>;
+  <% end %>
+  };
+  <% else %>
+  listen-on { any; };
+  <% end %>
+  <% if !node['bind']['listen-on-v6'].empty? %>
+  listen-on-v6 {
+  <% node['bind']['listen-on-v6'].each do |addr| %>
+      <%= addr %>;
+  <% end %>
+  };
+  <% else %>
+  listen-on-v6 { none; };
+  <% end %>
   <% node['bind']['options'].each do |option_line| -%>
   <%= option_line %>
   <% end -%>
