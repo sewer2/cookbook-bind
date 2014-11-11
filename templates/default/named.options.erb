@@ -56,7 +56,7 @@ options {
   };
   <% end -%>
   <% if !node['bind']['listen-on'].empty? %>
-  listen-on {
+  listen-on port <%= node['bind']['listen-on-port'] -%> {
   <% node['bind']['listen-on'].each do |addr| %>
       <%= addr %>;
   <% end %>
@@ -65,7 +65,7 @@ options {
   listen-on { any; };
   <% end %>
   <% if !node['bind']['listen-on-v6'].empty? %>
-  listen-on-v6 {
+  listen-on-v6 port <%= node['bind']['listen-on-v6-port'] -%> {
   <% node['bind']['listen-on-v6'].each do |addr| %>
       <%= addr %>;
   <% end %>

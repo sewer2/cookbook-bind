@@ -57,6 +57,8 @@ default['bind']['masters'] = []
 default['bind']['ipv6_listen'] = false
 default['bind']['listen-on'] = []
 default['bind']['listen-on-v6'] = []
+default['bind']['listen-on-port'] = 53
+default['bind']['listen-on-v6-port'] = default['bind']['listen-on-port']
 
 # If this is a virtual machine, you need to use urandom as
 # any VM does not have a real CMOS clock for entropy.
