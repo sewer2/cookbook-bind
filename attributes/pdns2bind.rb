@@ -14,3 +14,4 @@ default['bind']['pdns2bind']['config'] = '/etc/pdns2bind.conf'
 default['bind']['pdns2bind']['nsd'] = nil
 default['bind']['pdns2bind']['nsd_confdir'] = nil
 default['bind']['pdns2bind']['nsd_user'] = nil
+default['bind']['pdns2bind']['bind'] = True
