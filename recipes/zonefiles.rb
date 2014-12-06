@@ -4,8 +4,8 @@ else
   search(:zones).each do |zone|
     next unless zone['zone_info']
 
-    template "#{node[:bind][:vardir]}/#{zone['type']}/#{zone['domain']}" do
-      source "#{node[:bind][:vardir]}/templates/#{zone['domain']}.erb"
+    template "#{node[:bind][:sysconfdir]}/#{zone['type']}/#{zone['id']}" do
+      source "#{node[:bind][:vardir]}/templates/#{zone['id']}.erb"
       local true
       owner "root"
       group "root"
@@ -17,7 +17,7 @@ else
       action :nothing
     end
 
-    template "#{node[:bind][:vardir]}/templates/#{zone['domain']}.erb" do
+    template "#{node[:bind][:vardir]}/templates/#{zone['id']}.erb" do
       source "zonefile.erb"
       owner "root"
       group "root"
@@ -31,7 +31,9 @@ else
         :mail_exchange => zone['zone_info']['mail_exchange'],
         :records => zone['zone_info']['records']
       })
-      notifies :create, resources(:template => "#{node[:bind][:vardir]}/#{zone['type']}/#{zone['domain']}"), :immediately
+      notifies :create, resources(:template => "#{node[:bind][:sysconfdir]}/#{zone['type']}/#{zone['id']}"), :immediately
     end
+
+    node.default['bind']['zones']['zones'] = Chef::Mixin::DeepMerge.merge(node['bind']['zones']['zones'], {zone['id'] => zone})
   end
 end

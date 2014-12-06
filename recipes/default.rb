@@ -47,8 +47,16 @@ end
 end
 
 # Create /var/named subdirectories
-%w(data master slaves templates).each do |subdir|
+%w(data templates).each do |subdir|
   directory "#{node['bind']['vardir']}/#{subdir}" do
+    owner node['bind']['user']
+    group node['bind']['group']
+    mode 00770
+    recursive true
+  end
+end
+%w(master slaves views).each do |subdir|
+  directory "#{node['bind']['sysconfdir']}/#{subdir}" do
     owner node['bind']['user']
     group node['bind']['group']
     mode 00770
@@ -65,7 +73,7 @@ end
 
 # Copy /var/named files in place
 node['bind']['var_cookbook_files'].each do |var_file|
-  cookbook_file "#{node['bind']['vardir']}/#{var_file}" do
+  cookbook_file "#{node['bind']['sysconfdir']}/#{var_file}" do
     owner node['bind']['user']
     group node['bind']['group']
     mode 00644
@@ -93,9 +101,13 @@ else
 end
 
 all_zones = node['bind']['zones']['attribute'] + node['bind']['zones']['databag'] + node['bind']['zones']['ldap']
+if node[:bind].has_key?(:views) && node[:bind][:views].has_key?(:zones) && !node[:bind][:views][:zones].empty?
+  all_zones << node[:bind][:views][:zones]
+end
 
 # Render a template with all our global BIND options and ACLs
 template node['bind']['options_file'] do
+  source 'named.conf.options.erb'
   owner node['bind']['user']
   group node['bind']['group']
   mode  00644
@@ -107,11 +119,12 @@ end
 # Render our template with role zones, or returned results from
 # zonesource recipe
 template node['bind']['conf_file'] do
+  source 'named.conf.erb'
   owner node['bind']['user']
   group node['bind']['group']
   mode 00644
   variables(
-    zones: all_zones.uniq.sort
+    zones: all_zones.uniq.sort,
   )
 end
 
