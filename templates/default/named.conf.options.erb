@@ -10,23 +10,28 @@ acl "<%= acl['id'] -%>" {
 
 <% end -%>
 
+<% if node['bind']['masters'] != [] -%>
 masters default { <% node['bind']['masters'].each do |host| -%><%= host -%>; <% end -%> };
+<% end -%>
 
 options {
   directory "<%= node['bind']['vardir'] %>";
   dump-file "data/cache_dump.db";
   statistics-file "data/named_stats.txt";
   memstatistics-file "data/named_mem_stats.txt";
+  <% if !node['bind']['views'] -%>
   <% if node['bind']['recursion'] -%>
   recursion yes;
   <% else -%>
   recursion no;
   <% end -%>
+  <% if node['bind']['allow-query'] != nil -%>
   allow-query {
     <% node['bind']['allow-query'].each do |acl| -%>
     <%= acl%>;
     <% end -%>
   };
+  <% end -%>
   <% if node['bind']['allow-query-cache'] != nil -%>
   allow-query-cache {
     <% node['bind']['allow-query-cache'].each do |acl| -%>
@@ -40,6 +45,7 @@ options {
     <%= acl%>;
     <% end -%>
   };
+  <% end -%>
   <% end -%>
   <% if node['bind']['ipv6_listen'] -%>listen-on-v6 { any; };<% end -%>
   <% node['bind']['options'].each do |option_line| -%>

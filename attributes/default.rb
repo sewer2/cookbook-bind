@@ -22,6 +22,7 @@ default['bind']['vardir'] = '/var/named'
 default['bind']['sysconfdir'] = '/etc/named'
 default['bind']['conf_file'] = '/etc/named.conf'
 default['bind']['options_file'] = "#{node['bind']['sysconfdir']}/named.options"
+default['bind']['views_file'] = "#{node['bind']['sysconfdir']}/named.views"
 default['bind']['service_name'] = 'named'
 default['bind']['user'] = 'named'
 default['bind']['group'] = 'named'
@@ -45,7 +46,7 @@ when 'debian'
 end
 
 # Files which should be included in named.conf
-default['bind']['included_files'] = %w(named.rfc1912.zones named.options)
+default['bind']['included_files'] = %w(named.rfc1912.zones named.conf.options)
 
 # These are var files referenced by our rfc1912 zone and root hints (named.ca) zone
 default['bind']['var_cookbook_files'] = %w(named.empty named.ca named.loopback named.localhost)
@@ -71,7 +72,8 @@ default['bind']['acls'] = []
 
 # These attributes are for setting allow-* options. Each is a list of ACLs defined in data_bag.
 # If allow-query is not redefined, only requests from localhost and local networks will be served.
-default['bind']['allow-query'] = [ :localhost, :localnets ]
+#default['bind']['allow-query'] = [ :localhost, :localnets ]
+default['bind']['allow-query'] = nil
 default['bind']['allow-query-cache'] = nil
 default['bind']['allow-recursion'] = nil
 
@@ -87,6 +89,7 @@ default['bind']['options'] = []
 default['bind']['zones']['attribute'] = []
 default['bind']['zones']['ldap'] = []
 default['bind']['zones']['databag'] = []
+default['bind']['zones']['zones'] = Mash.new
 default['bind']['zonetype'] = 'slave'
 default['bind']['zonesource'] = nil
 

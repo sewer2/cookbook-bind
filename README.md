@@ -62,6 +62,9 @@ The net-ldap v0.2.2 Ruby gem is required for the ldap2zone recipe.
   - An array attribute where zone names may be set from a
     databag source.
 
+* `bind['zones']['zones']`
+  - An array of hashs of all described zones.
+
 * `bind['zonetype']`
   - The zone type, master, or slave for configuring
     the  named.conf template.
@@ -114,8 +117,11 @@ The net-ldap v0.2.2 Ruby gem is required for the ldap2zone recipe.
   - Platform specific defaults
 
 * `bind['options_file']`
-  - Full path to named.options
+  - Full path to named.conf.options
   - Platform specific defaults
+
+* `bind['views_file']`
+  - Full path to named.conf.views
 
 * `bind['vardir']`
   - var directory for named to write state data, such as zone files.
@@ -332,7 +338,7 @@ use the following format to include a number of zones at once.
   * data_bag: zones
 
 ```json
-{ "id" : "example.com",
+{ "id" : "example-com",
   "domain" : "example.com",
   "type": "master",
   "allow_transfer": [ "192.168.0.2", "192.168.0.3" ],
@@ -372,9 +378,36 @@ use the following format to include a number of zones at once.
 }
 ```
 
+### Example to use split view
+
+Attributes example
+
+```ruby
+"bind" => {
+  "views" => {
+    "internal" => {
+      "match-clients" => [ "internals" ],
+      "allow-transfer" => [ "none" ],
+      "recursion" => true,
+      "zones" => ["example-org-internal"]
+    },
+    "external" => {
+      "match-clients" => [ "any" ],
+      "allow-transfer" => [ "localhost" ],
+      "zones" => ["example-org-external", "domain.com"]
+    }
+  }
+}
+```
+
+As the name of the zone, you can use the id of the data_bag item as well as the domain name, the recipe now support both.
+
+
 ## License and Author
 
 Copyright: 2011 Eric G. Wolfe
+Copyright: 2014 Eugene Alekseev
+Copyright: 2014 Alexey Mochkin
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
