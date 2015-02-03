@@ -15,3 +15,4 @@ default['bind']['pdns2bind']['nsd'] = nil
 default['bind']['pdns2bind']['nsd_confdir'] = nil
 default['bind']['pdns2bind']['nsd_user'] = nil
 default['bind']['pdns2bind']['bind'] = 'False'
+default['bind']['pdns2bind']['source_ip'] = nil
