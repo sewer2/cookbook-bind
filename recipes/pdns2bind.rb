@@ -12,6 +12,6 @@ end
 
 cron "pdns2bind.py" do
     action :create
-    command "flock -x -w 5 /var/lock/pdns2bind.lock -c \"/opt/pdns2bind/bin/pdns2bind.py -c #{node['bind']['pdns2bind']['config']}\""
+    command "flock -x -w 5 /var/lock/pdns2bind.lock -c \"/opt/pdns2bind/bin/sql2dns.py -c #{node['bind']['pdns2bind']['config']}\""
 end
 
