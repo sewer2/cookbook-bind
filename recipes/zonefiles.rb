@@ -12,7 +12,7 @@ else
       mode 0644
       notifies :restart, resources(:service => "bind9")
       variables({
-        :serial => Time.new.strftime("%Y%m%d%H%M%S")
+        :serial => Time.now.utc.to_i
       })
       action :nothing
     end
