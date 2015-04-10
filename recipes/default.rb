@@ -106,8 +106,8 @@ if node[:bind].has_key?(:views) && node[:bind][:views].has_key?(:zones) && !node
 end
 
 # Render a template with all our global BIND options and ACLs
-template node['bind']['options_file'] do
-  source 'named.conf.options.erb'
+template "#{node['bind']['sysconfdir']}/#{node['bind']['options_file']}" do
+  source "named.conf.options.erb"
   owner node['bind']['user']
   group node['bind']['group']
   mode  00644
@@ -138,7 +138,7 @@ end
 service node['bind']['service_name'] do
   supports reload: true, status: true
   action [:enable, :start]
-  subscribes :reload, resources("template[#{node['bind']['options_file']}]",
+  subscribes :reload, resources("template[#{node['bind']['sysconfdir']}/#{node['bind']['options_file']}]",
                                 "template[#{node['bind']['conf_file']}]"), :delayed
   only_if { ::File.exists?(node['bind']['options_file']) && ::File.exists?(node['bind']['conf_file']) }
 end

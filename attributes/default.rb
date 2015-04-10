@@ -21,7 +21,7 @@ default['bind']['packages'] = %w(bind bind-utils bind-libs)
 default['bind']['vardir'] = '/var/named'
 default['bind']['sysconfdir'] = '/etc/named'
 default['bind']['conf_file'] = '/etc/named.conf'
-default['bind']['options_file'] = "#{node['bind']['sysconfdir']}/named.conf.options"
+default['bind']['options_file'] = "named.conf.options"
 default['bind']['views_file'] = "#{node['bind']['sysconfdir']}/named.views"
 default['bind']['service_name'] = 'named'
 default['bind']['user'] = 'named'
@@ -37,7 +37,7 @@ when 'debian'
   default['bind']['packages'] = %w(bind9 bind9utils)
   default['bind']['sysconfdir'] = '/etc/bind'
   default['bind']['conf_file'] = "#{node['bind']['sysconfdir']}/named.conf"
-  default['bind']['options_file'] = "#{node['bind']['sysconfdir']}/named.conf.options"
+  default['bind']['options_file'] = "named.conf.options"
   default['bind']['vardir'] = '/var/cache/bind'
   default['bind']['service_name'] = 'bind9'
   default['bind']['user'] = 'bind'
@@ -46,7 +46,7 @@ when 'debian'
 end
 
 # Files which should be included in named.conf
-default['bind']['included_files'] = %W(#{node['bind']['sysconfdir']}/named.rfc1912.zones #{node['bind']['options_file']})
+default['bind']['included_files'] = %W(named.rfc1912.zones #{node['bind']['options_file']})
 
 # These are var files referenced by our rfc1912 zone and root hints (named.ca) zone
 default['bind']['var_cookbook_files'] = %w(named.empty named.ca named.loopback named.localhost)

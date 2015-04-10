@@ -1,22 +1,22 @@
 ## pdns2bind  configuration file. In YAML format only.
 
 ## Database host of powerdns database
-db_host: <%= @db_host %>
+db_host: '<%= @db_host %>'
 
 ## Database username for powerdns database
-db_user: <%= @db_user %>
+db_user: '<%= @db_user %>'
 
 ## Database name
-db_name: <%= @db_name %>
+db_name: '<%= @db_name %>'
 
 ## Database user password
-db_password: <%= @db_password %>
+db_password: '<%= @db_password %>'
 
 ## Bind config dir. Usualy /etc/bind or /etc/named. Here will be placed file with zone descriptions.
-bind_confdir: <%= @bind_confdir %>
+bind_confdir: '<%= @bind_confdir %>'
 
 ## Bind data dir. Here will be stored zonefiles.
-bind_datadir: <%= @bind_datadir %>
+bind_datadir: '<%= @bind_datadir %>'
 
 ## Bind role - master or slave.
 bind_role: <%= @bind_role %>

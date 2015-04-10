@@ -2,8 +2,8 @@ package 'pdns2bind' do
     action :upgrade
 end
 
-template "/etc/pdns2bind.conf" do
-    source "pdns2bind.conf"
+template "#{node['bind']['pdns2bind']['config']}" do
+  source "pdns2bind.conf.erb"
     mode 0600
     user 'root'
     group 'root'
