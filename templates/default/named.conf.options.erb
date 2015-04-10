@@ -46,8 +46,41 @@ options {
     <% end -%>
   };
   <% end -%>
+  <% if node['bind']['ipv6_listen'] -%>
+  listen-on-v6 { any; };
   <% end -%>
-  <% if node['bind']['ipv6_listen'] -%>listen-on-v6 { any; };<% end -%>
+  <% if node['bind']['allow-transfer'] != nil %>
+  allow-transfer {
+    <% node['bind']['allow-transfer'].each do |acl| -%>
+    <%= acl%>;
+    <% end -%>
+  };
+  <% end -%>
+  <% if node['bind']['allow-notify'] != nil %>
+  allow-notify {
+    <% node['bind']['allow-notify'].each do |acl| -%>
+    <%= acl%>;
+    <% end -%>
+  };
+  <% end -%>
+  <% if !node['bind']['listen-on'].empty? %>
+  listen-on port <%= node['bind']['listen-on-port'] -%> {
+  <% node['bind']['listen-on'].each do |addr| %>
+      <%= addr %>;
+  <% end %>
+  };
+  <% else %>
+  listen-on { any; };
+  <% end %>
+  <% if !node['bind']['listen-on-v6'].empty? %>
+  listen-on-v6 port <%= node['bind']['listen-on-v6-port'] -%> {
+  <% node['bind']['listen-on-v6'].each do |addr| %>
+      <%= addr %>;
+  <% end %>
+  };
+  <% else %>
+  listen-on-v6 { none; };
+  <% end %>
   <% node['bind']['options'].each do |option_line| -%>
   <%= option_line %>
   <% end -%>

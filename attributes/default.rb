@@ -56,6 +56,10 @@ default['bind']['masters'] = []
 
 # Boolean to turn off/on IPV6 support
 default['bind']['ipv6_listen'] = false
+default['bind']['listen-on'] = []
+default['bind']['listen-on-v6'] = []
+default['bind']['listen-on-port'] = 53
+default['bind']['listen-on-v6-port'] = default['bind']['listen-on-port']
 
 # If this is a virtual machine, you need to use urandom as
 # any VM does not have a real CMOS clock for entropy.
@@ -76,6 +80,8 @@ default['bind']['acls'] = []
 default['bind']['allow-query'] = nil
 default['bind']['allow-query-cache'] = nil
 default['bind']['allow-recursion'] = nil
+default['bind']['allow-transfer'] = nil
+default['bind']['allow-notify'] = nil
 
 # Enable/disable recursion in options block. Enabled by default.
 default['bind']['recursion'] = true
