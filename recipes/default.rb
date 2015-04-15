@@ -55,7 +55,7 @@ end
     recursive true
   end
 end
-%w(master slaves views).each do |subdir|
+%w(master slave views).each do |subdir|
   directory "#{node['bind']['sysconfdir']}/#{subdir}" do
     owner node['bind']['user']
     group node['bind']['group']
