@@ -140,5 +140,5 @@ service node['bind']['service_name'] do
   action [:enable, :start]
   subscribes :reload, resources("template[#{node['bind']['sysconfdir']}/#{node['bind']['options_file']}]",
                                 "template[#{node['bind']['conf_file']}]"), :delayed
-  only_if { ::File.exists?(node['bind']['options_file']) && ::File.exists?(node['bind']['conf_file']) }
+  only_if { ::File.exists?("#{node['bind']['sysconfdir']}/#{node['bind']['options_file']}") && ::File.exists?(node['bind']['conf_file']) }
 end
